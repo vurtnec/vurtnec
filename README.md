@@ -1,2 +1,2 @@
-# vurtnec
-personal use for blog
+# zachary howe
+personal use for my blog
