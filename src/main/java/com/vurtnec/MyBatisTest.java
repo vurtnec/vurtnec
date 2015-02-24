@@ -32,7 +32,7 @@ public class MyBatisTest {
 	public static void main(String[] args) {
 		SqlSession sqlSession = getSessionFactory().openSession();
 		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-
+		System.out.println("ready to select...");
 		// test select
 		User user = userMapper.findByName("andy");
 		System.out.println(user.getName());
