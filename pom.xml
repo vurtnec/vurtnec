@@ -10,6 +10,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<finalName>vurtnecBlog</finalName>
 		<springversion>3.1.1.RELEASE</springversion>
+		<mybatisversion>3.1.1</mybatisversion>
+		<mysqlversion>5.1.28</mysqlversion>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -26,7 +28,17 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
-
+		<!-- mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatisversion}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysqlversion}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -34,7 +46,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<configuration>
-					<url>http://localhost:8080/manager/text</url>
+					<url>http://localhost:8081/manager/text</url>
 					<username>admin</username>
 					<password>admin</password>
 					<path>/${finalName}</path>
