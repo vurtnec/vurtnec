@@ -1,0 +1,7 @@
+CREATE TABLE `user` (
+  `userId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `userName` varchar(255) NOT NULL,
+  `userPassword` varchar(255) NOT NULL,
+  `userEmail` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='user main table'

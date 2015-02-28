@@ -5,7 +5,7 @@
 <configuration>
  <typeAliases>
   <!--给实体类起一个别名 user -->
-  <typeAlias type="com.vurtnec.User" alias="User" />
+  <typeAlias type="com.vurtnec.model.bean.User" alias="User" />
  </typeAliases>
  <!--数据源配置 使用mysql数据库 -->
  <environments default="development">
@@ -21,6 +21,6 @@
  </environments>
  <mappers>
   <!--userMapper.xml装载进来 同等于把“dao”的实现装载进来 -->
-  <mapper resource="mappers/UserMapper.xml" />
+  <mapper resource="mybatis/mappers/UserMapper.xml" />
  </mappers>
 </configuration>

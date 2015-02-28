@@ -3,17 +3,13 @@
     "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--这块等于dao接口的实现 namespace必须和接口的类路径一样 -->
-<mapper namespace="com.vurtnec.UserMapper">
+<mapper namespace="com.vurtnec.model.impl.UserMapper">
 	<!-- findByName 和 inserUser必须和接口中的方法名一样 返回一个User 就是刚才的别名 如果不弄别名要连类路径一起写 -->
 	<select id="findByName" parameterType="HashMap" resultType="User">
-		select * from user where name=#{name}
+		select * from user where userName=#{userName}
 	</select>
 
-	<insert id="insertUser" parameterType="com.vurtnec.User">
-		insert into user (name,age) value
-		(
-		#{name,jdbcType=VARCHAR} ,
-		#{age,jdbcType=SMALLINT}
-		)
+	<insert id="insertUser" parameterType="com.vurtnec.model.bean.User" useGeneratedKeys="true" keyProperty="userId">
+		insert into user (userName, userPassword) value (#{userName,jdbcType=VARCHAR},#{userPassword,jdbcType=VARCHAR})
 	</insert>
 </mapper>

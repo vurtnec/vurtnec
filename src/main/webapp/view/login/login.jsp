@@ -21,8 +21,6 @@
 </head>
 
 <body>
-	<h1>welcome</h1>
-
 	<div class="container">
 		<form class="form-signin">
 			<h2 class="form-signin-heading">Please sign in</h2>
