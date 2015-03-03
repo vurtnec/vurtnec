@@ -16,10 +16,9 @@ public class VurtnecController {
 	@RequestMapping(value = { "/welcome" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
 	public String welcome() {
 		
-		logger.info("enter.");
-		
-		LoggerUtil.getInstantce().debug(logger, "debug.");
+		LoggerUtil.getInstantce().debug(logger, "welcome page enter.");
 		
 		return "/welcome";
 	}
+	
 }
