@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--这块等于dao接口的实现 namespace必须和接口的类路径一样 -->
+<mapper namespace="com.vurtnec.model.impl.CategoryMapper">
+
+	<select id="findAllCategory" resultType="Category">
+		select * from category;
+	</select>
+	
+	<select id="findCategoryById" parameterType="int" resultType="Category">
+		select * from category where categoryId=#{categoryId}
+	</select>
+	
+	<insert id="insertCategory" parameterType="com.vurtnec.model.bean.Category" useGeneratedKeys="true" keyProperty="categoryId">
+		insert into category (categoryName, categoryImage) values (#{categoryName,jdbcType=VARCHAR},#{categoryImage,jdbcType=VARCHAR})
+	</insert>
+	
+</mapper>

@@ -10,6 +10,6 @@
 	</select>
 
 	<insert id="insertUser" parameterType="com.vurtnec.model.bean.User" useGeneratedKeys="true" keyProperty="userId">
-		insert into user (userName, userPassword) value (#{userName,jdbcType=VARCHAR},#{userPassword,jdbcType=VARCHAR})
+		insert into user (userName, userPassword) values (#{userName,jdbcType=VARCHAR},#{userPassword,jdbcType=VARCHAR})
 	</insert>
 </mapper>

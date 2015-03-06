@@ -21,6 +21,6 @@ public class LoginController {
 	@RequestMapping(value = { "/signIn" }, method = { org.springframework.web.bind.annotation.RequestMethod.POST })
 	public String signIn() {
 		System.out.println("signIn controller");
-		return "/welcome";
+		return "/front/welcome";
 	}
 }

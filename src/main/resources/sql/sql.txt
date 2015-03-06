@@ -5,3 +5,27 @@ CREATE TABLE `user` (
   `userEmail` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='user main table'
+
+
+CREATE TABLE `category` (
+  `categoryId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `categoryName` varchar(255) NOT NULL,
+  `categoryImage` varchar(255) NOT NULL,
+  PRIMARY KEY (`categoryId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
+
+
+CREATE TABLE `article` (
+  `articleId` int(11) NOT NULL AUTO_INCREMENT,
+  `articleTitle` varchar(255) NOT NULL,
+  `articleSubTitle` varchar(255) NOT NULL,
+  `articleImage` varchar(255) DEFAULT NULL,
+  `articleContent` text NOT NULL,
+  `articleAuthor` varchar(255) DEFAULT NULL,
+  `articleCreateTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `categoryId` int(10) unsigned DEFAULT NULL,
+  `articleUpdateTime` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`articleId`),
+  KEY `FK_categoryId` (`categoryId`),
+  CONSTRAINT `FK_categoryId` FOREIGN KEY (`categoryId`) REFERENCES `category` (`categoryId`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8

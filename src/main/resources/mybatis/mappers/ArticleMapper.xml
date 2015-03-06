@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--这块等于dao接口的实现 namespace必须和接口的类路径一样 -->
+<mapper namespace="com.vurtnec.model.impl.ArticleMapper">
+	
+	<select id="findAllArticleOrderByTime" resultType="Article">
+		select * from article order by articleCreateTime
+	</select>
+	
+	<select id="findArticleById" parameterType="int" resultType="Article">
+		select * from article where articleId=#{articleId}
+	</select>
+	
+	<select id="findArticleByCategoryIdOrderByTime" parameterType="int" resultType="Article">
+		select * from article where articleId=#{articleId} order by articleCreateTime
+	</select>
+	
+	<insert id="insertArticle" parameterType="com.vurtnec.model.bean.Article" useGeneratedKeys="true" keyProperty="articleId">
+		insert into `article` (`articleTitle`,`articleSubTitle`,`articleImage`,`articleContent`,`articleAuthor`,`articleCreateTime`,`categoryId`,`articleUpdateTime`) values (#{articleTitle,jdbcType=VARCHAR},#{articleSubTitle,jdbcType=VARCHAR},#{articleImage,jdbcType=VARCHAR},#{articleContent,jdbcType=VARCHAR},#{articleAuthor,jdbcType=VARCHAR},#{articleCreateTime,jdbcType=TIMESTAMP},#{categoryId,jdbcType=INTEGER},#{articleUpdateTime,jdbcType=TIMESTAMP})
+	</insert>
+	
+</mapper>
