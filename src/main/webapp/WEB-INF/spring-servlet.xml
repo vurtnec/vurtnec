@@ -26,5 +26,7 @@
      
     
     <!-- 获取数据源 -->  
-    
+    <bean id="dbConnection" class="com.vurtnec.component.dbconn.DBConnection" >
+    	<property name="resource" value="mybatis/configuration.xml" />
+    </bean>
 </beans>  

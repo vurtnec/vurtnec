@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class DBConnection {
 
-	
+	private String resource;
 	/**
 	 * 获得MyBatis SqlSessionFactory
 	 * SqlSessionFactory负责创建SqlSession，一旦创建成功，就可以用SqlSession实例来执行映射语句
@@ -16,15 +16,22 @@ public class DBConnection {
 	 * 
 	 * @return
 	 */
-	public static SqlSessionFactory getSessionFactory() {
+	public SqlSessionFactory getSessionFactory() {
 		SqlSessionFactory sessionFactory = null;
-		String resource = "mybatis/configuration.xml";
+		String resource = getResource();
 		try {
 			sessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader(resource));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return sessionFactory;
+	}
+	
+	public String getResource() {
+		return resource;
+	}
+	public void setResource(String resource) {
+		this.resource = resource;
 	}
 	
 }

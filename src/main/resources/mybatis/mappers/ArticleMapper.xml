@@ -9,6 +9,14 @@
 		select * from article order by articleCreateTime
 	</select>
 	
+	<select id="findArticleCount" resultType="int">
+		select count(*) from article
+	</select>
+	
+	<select id="findArticlePageOrderByTime" parameterType="int" resultType="Article">
+		select * from article order by articleCreateTime limit #{pageNow},5 
+	</select>
+	
 	<select id="findArticleById" parameterType="int" resultType="Article">
 		select * from article where articleId=#{articleId}
 	</select>
