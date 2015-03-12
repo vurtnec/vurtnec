@@ -49,6 +49,7 @@ public class MyBatisTest {
 				
 			// test select
 			System.out.println(userMapper.findByName("vurtnec"));
+//			System.out.println(userMapper.login("vurtnec", "teamozj83266"));
 		
 			CategoryMapper categoryMapper = sqlSession.getMapper(CategoryMapper.class);
 			

@@ -8,6 +8,10 @@
 	<select id="findByName" parameterType="HashMap" resultType="User">
 		select * from user where userName=#{userName}
 	</select>
+	
+	<select id="login" parameterType="HashMap" resultType="User">
+		select * from user where userName=#{userName} and userPassword=#{userPassword}
+	</select>
 
 	<insert id="insertUser" parameterType="com.vurtnec.model.bean.User" useGeneratedKeys="true" keyProperty="userId">
 		insert into user (userName, userPassword) values (#{userName,jdbcType=VARCHAR},#{userPassword,jdbcType=VARCHAR})
