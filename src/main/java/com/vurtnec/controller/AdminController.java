@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -28,27 +29,30 @@ public class AdminController {
 	private DBConnection dbConnection;
 	
 	@RequestMapping(value = { "/login" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
-	public String login() {
+	public ModelAndView login(String errorCode) {
 		logger.info("login controller");
-		return "/admin/login";
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("errorCode", errorCode);
+		mv.setViewName("/admin/login");
+		return mv;
 	}
 
 	@RequestMapping(value = { "/signIn" }, method = { org.springframework.web.bind.annotation.RequestMethod.POST })
-	public ModelAndView signIn(String userName, String password) {
+	public ModelAndView signIn(String userName, String password, HttpSession httpSession) {
 		System.out.println("signIn controller");
 		ModelAndView mv = new ModelAndView();
 		
 		if(Strings.isNullOrEmpty(userName)) {
 			mv.addObject("errorCode", "username can not be empty.");
-			mv.setViewName("/admin/login");;
+			mv.setViewName("redirect:/login");;
 			return mv;
 		}
 		if(Strings.isNullOrEmpty(password)) {
 			mv.addObject("errorCode", "password can not be empty.");
-			mv.setViewName("/admin/login");;
+			mv.setViewName("redirect:/login");;
 			return mv;
 		}
-		
+		List<User> user = null;
 		SqlSession sqlSession = getDbConnection().getSessionFactory().openSession();
 		try {
 			UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
@@ -58,20 +62,44 @@ public class AdminController {
 			map.put("userName", userName);
 			map.put("userPassword", password);
 			
-			List<User> user = userMapper.login(map);
+			user = userMapper.login(map);
 			
-			if(user == null || user.size() != 1) {
-				mv.addObject("errorCode", "username or password is wrong.");
-				mv.setViewName("/admin/login");;
-				return mv;
-			}
 		} finally {
 			sqlSession.close();
 		}
-		mv.addObject("errorCode","login success.");
+		
+		if(user == null || user.size() != 1) {
+			mv.addObject("errorCode", "username or password is wrong.");
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		
+		httpSession.setAttribute("currentUser", user.get(0));
+		
+		mv.setViewName("redirect:/admin/home");
+		return mv;
+	}
+	
+	
+	@RequestMapping(value = { "/admin/home" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView adminHome(HttpSession httpSession) {
+		logger.info("adminHome controller");
+		User currentUser = (User) httpSession.getAttribute("currentUser");
+		ModelAndView mv = new ModelAndView();
+		
+		if(currentUser == null) {
+			mv.setViewName("redirect:/login");
+			return mv;
+		}
+		
+		mv.addObject("currentUser", currentUser);
+		
 		mv.setViewName("/admin/home");
 		return mv;
 	}
+	
+	
+	
 	
 	public DBConnection getDbConnection() {
 		return dbConnection;

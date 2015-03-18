@@ -4,7 +4,7 @@
 <head>
     <title>Home - Vurtnec Blog</title>
 	<%@ include file="/view/front/common/header.jspf"%>
-	<link rel="stylesheet" type="text/css" href="css/login.css" />
+	<link rel="stylesheet" type="text/css" href="${ctx}/css/login.css" />
 </head>
 
 <body>
