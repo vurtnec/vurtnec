@@ -4,6 +4,7 @@
 <head>
     <title>Home - Vurtnec Blog</title>
 	<%@ include file="/view/front/common/header.jspf"%>
+	<link rel="stylesheet" type="text/css" href="${ctx}/css/login.css" />
 </head>
 
 <body>
@@ -41,7 +42,9 @@
 	                            ${article.articleSubTitle}
 	                        </h3>
 	                    </a>
-	                    <p>${fn:substring(article.articleContent,0,200) }...</p>
+	                    <c:if test="${not empty article.articlePreview }">
+		                    <p style="font-size: 16px;">${article.articlePreview }...</p>
+	                    </c:if>
 	                    <c:choose>
 	                    	<c:when test="${empty article.articleAuthor}">
 	                    		<p class="post-meta">Posted on <fmt:formatDate value="${article.articleCreateTime }" pattern="MMMM dd, yyyy" /></p>
@@ -72,5 +75,4 @@
     </div>
     <%@ include file="/view/front/common/footer.jspf"%>
 </body>
-
 </html>

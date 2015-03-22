@@ -1,12 +1,15 @@
 package com.vurtnec;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
+import com.vurtnec.model.bean.Article;
 import com.vurtnec.model.impl.ArticleMapper;
 import com.vurtnec.model.impl.CategoryMapper;
 import com.vurtnec.model.impl.UserMapper;
@@ -66,16 +69,19 @@ public class MyBatisTest {
 			
 			ArticleMapper articleMapper = sqlSession.getMapper(ArticleMapper.class);
 			
-	//		Article article = new Article();
-	//		article.setArticleTitle("Man must explore, and this is exploration at its greatest");
-	//		article.setArticleSubTitle("Problems look mighty small from 150 miles up");
-	//		article.setArticleAuthor("vurtnec");
-	//		article.setArticleContent("Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest ");
-	//		article.setArticleCreateTime(new Timestamp(new Date().getTime()));
-	//		article.setArticleImage("img/post-bg.jpg");
-	//		article.setCategoryId(1);
-	//		articleMapper.insertArticle(article);
-	//		sqlSession.commit();
+//			Article article = new Article();
+//			article.setArticleTitle("Man must explore, and this is exploration at its greatest");
+//			article.setArticleSubTitle("Problems look mighty small from 150 miles up");
+//			article.setArticleAuthor("vurtnec");
+//			article.setArticleContent("Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest Man must explore, and this is exploration at its greatest ");
+//			article.setArticleCreateTime(new Timestamp(new Date().getTime()));
+//			article.setArticleImage("img/post-bg.jpg");
+//			article.setCategoryId(1);
+//			articleMapper.insertArticle(article);
+//			articleMapper.insertArticle(article);
+//			articleMapper.insertArticle(article);
+//			articleMapper.insertArticle(article);
+//			sqlSession.commit();
 			
 			System.out.println(articleMapper.findAllArticleOrderByTime());
 			System.out.println(articleMapper.findArticleById(1));

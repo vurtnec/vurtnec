@@ -56,7 +56,18 @@
             </div>
         </div>
     </header>
-	<div class="container">
+    
+    <div class="container">
+		<div class="row">
+			 <form action="${ctx}/synchronize" id="synchronizeForm" method="get">
+                <input type="text" name="url" >
+                <button id="synchronizeBtm" >synchronize</button>
+            </form>
+		</div>
+	</div>
+    
+    
+	<!-- <div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 				<div class="">
@@ -137,18 +148,19 @@
 							<input type="text" data-edit="inserttext" id="voiceBtn"
 								x-webkit-speech="">
 						</div>
-						<div id="editor">enter content&hellip;</div>
+						<div id="editor"></div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
     <%@ include file="/view/front/common/footer.jspf"%>
-    <script src="${ctx}/js/bootstrap-wysiwyg.js" type="text/javascript"></script>
-	<script src="${ctx}/js/jquery.hotkeys.js" type="text/javascript"></script>
+   <%--  <script src="${ctx}/js/bootstrap-wysiwyg.js" type="text/javascript"></script>
+	<script src="${ctx}/js/jquery.hotkeys.js" type="text/javascript"></script> --%>
 	<script>
+		
 	  $(function(){
-	    function initToolbarBootstrapBindings() {
+	    /* function initToolbarBootstrapBindings() {
 	      var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier', 
 	            'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
 	            'Times New Roman', 'Verdana'],
@@ -180,9 +192,13 @@
 			}
 			$('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
 			 '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
-		};
-	    initToolbarBootstrapBindings(); 
-		$('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
+		}; */
+		
+		$('#synchronizeBtm').bind('click',function(){
+			$('#synchronizeForm').submit();
+		});
+	    /* initToolbarBootstrapBindings(); 
+		$('#editor').wysiwyg({ fileUploadError: showErrorAlert} ); */
 	  });
 	</script>
 </body>

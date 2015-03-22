@@ -29,4 +29,8 @@
     <bean id="dbConnection" class="com.vurtnec.component.dbconn.DBConnection" >
     	<property name="resource" value="mybatis/configuration.xml" />
     </bean>
+    
+    <bean id="crawlerConfiguration" class="com.vurtnec.component.crawler.CrawlerConfiguration">
+    	<property name="url" value="http://vurtnec2015.blog.163.com" />
+    </bean>
 </beans>  

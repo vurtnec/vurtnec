@@ -26,7 +26,7 @@
 	</select>
 	
 	<insert id="insertArticle" parameterType="com.vurtnec.model.bean.Article" useGeneratedKeys="true" keyProperty="articleId">
-		insert into `article` (`articleTitle`,`articleSubTitle`,`articleImage`,`articleContent`,`articleAuthor`,`articleCreateTime`,`categoryId`,`articleUpdateTime`) values (#{articleTitle,jdbcType=VARCHAR},#{articleSubTitle,jdbcType=VARCHAR},#{articleImage,jdbcType=VARCHAR},#{articleContent,jdbcType=VARCHAR},#{articleAuthor,jdbcType=VARCHAR},#{articleCreateTime,jdbcType=TIMESTAMP},#{categoryId,jdbcType=INTEGER},#{articleUpdateTime,jdbcType=TIMESTAMP})
+		insert into `article` (`articleTitle`,`articleSubTitle`,`articleImage`,`articleContent`,`articleAuthor`,`articleCreateTime`,`categoryId`,`articleUpdateTime`,`articlePreview`) values (#{articleTitle,jdbcType=VARCHAR},#{articleSubTitle,jdbcType=VARCHAR},#{articleImage,jdbcType=VARCHAR},#{articleContent,jdbcType=VARCHAR},#{articleAuthor,jdbcType=VARCHAR},#{articleCreateTime,jdbcType=TIMESTAMP},#{categoryId,jdbcType=INTEGER},#{articleUpdateTime,jdbcType=TIMESTAMP},#{articlePreview,jdbcType=VARCHAR})
 	</insert>
 	
 </mapper>

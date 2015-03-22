@@ -21,6 +21,8 @@ public class Article {
 	private int categoryId;
 	
 	private Timestamp articleUpdateTime;
+	
+	private String articlePreview;
 
 	public int getArticleId() {
 		return articleId;
@@ -92,5 +94,13 @@ public class Article {
 
 	public void setArticleUpdateTime(Timestamp articleUpdateTime) {
 		this.articleUpdateTime = articleUpdateTime;
+	}
+
+	public String getArticlePreview() {
+		return articlePreview;
+	}
+
+	public void setArticlePreview(String articlePreview) {
+		this.articlePreview = articlePreview;
 	}
 }

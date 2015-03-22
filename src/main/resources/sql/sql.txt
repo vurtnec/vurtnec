@@ -20,7 +20,7 @@ CREATE TABLE `article` (
   `articleTitle` varchar(255) NOT NULL,
   `articleSubTitle` varchar(255) NOT NULL,
   `articleImage` varchar(255) DEFAULT NULL,
-  `articleContent` text NOT NULL,
+  `articleContent` longtext NOT NULL,
   `articleAuthor` varchar(255) DEFAULT NULL,
   `articleCreateTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   `categoryId` int(10) unsigned DEFAULT NULL,
@@ -28,4 +28,4 @@ CREATE TABLE `article` (
   PRIMARY KEY (`articleId`),
   KEY `FK_categoryId` (`categoryId`),
   CONSTRAINT `FK_categoryId` FOREIGN KEY (`categoryId`) REFERENCES `category` (`categoryId`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8

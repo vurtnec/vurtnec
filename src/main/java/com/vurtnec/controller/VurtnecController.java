@@ -70,9 +70,9 @@ public class VurtnecController {
 	
 	@RequestMapping(value = { "/post" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView post(String articleId) {
+		ModelAndView mv = new ModelAndView();
 		if(Strings.isNullOrEmpty(articleId)) {
 			LoggerUtil.getInstantce().debug(logger, "post page enter and article id is empty.");
-			ModelAndView mv = new ModelAndView();
 			mv.setViewName("/error");
 			return mv;
 		}
@@ -90,8 +90,11 @@ public class VurtnecController {
 		} finally {
 			sqlSession.close();
 		}
-		
-		ModelAndView mv = new ModelAndView();
+		if(article == null) {
+			mv.setViewName("redirect:/home");
+			return mv;
+		}
+		LoggerUtil.getInstantce().debug(logger, article.getArticleContent());
 		mv.addObject("article", article);
 		mv.addObject("categorys", categorys);
 		mv.setViewName("/front/post");
