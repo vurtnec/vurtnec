@@ -84,6 +84,11 @@
 			<artifactId>crawler4j</artifactId>
 			<version>4.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.rometools</groupId>
+			<artifactId>rome</artifactId>
+			<version>1.5.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

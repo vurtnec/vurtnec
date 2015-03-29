@@ -21,12 +21,16 @@
 		select * from article where articleId=#{articleId}
 	</select>
 	
+	<select id="findArticleByHash" parameterType="String" resultType="int">
+		select count(*) from article where articleHashCode=#{articleHashCode}
+	</select>
+	
 	<select id="findArticleByCategoryIdOrderByTime" parameterType="int" resultType="Article">
 		select * from article where articleId=#{articleId} order by articleCreateTime
 	</select>
 	
 	<insert id="insertArticle" parameterType="com.vurtnec.model.bean.Article" useGeneratedKeys="true" keyProperty="articleId">
-		insert into `article` (`articleTitle`,`articleSubTitle`,`articleImage`,`articleContent`,`articleAuthor`,`articleCreateTime`,`categoryId`,`articleUpdateTime`,`articlePreview`) values (#{articleTitle,jdbcType=VARCHAR},#{articleSubTitle,jdbcType=VARCHAR},#{articleImage,jdbcType=VARCHAR},#{articleContent,jdbcType=VARCHAR},#{articleAuthor,jdbcType=VARCHAR},#{articleCreateTime,jdbcType=TIMESTAMP},#{categoryId,jdbcType=INTEGER},#{articleUpdateTime,jdbcType=TIMESTAMP},#{articlePreview,jdbcType=VARCHAR})
+		insert into `article` (`articleTitle`,`articleSubTitle`,`articleImage`,`articleContent`,`articleAuthor`,`articleCreateTime`,`categoryId`,`articleUpdateTime`,`articlePreview`,`articleHashCode`) values (#{articleTitle,jdbcType=VARCHAR},#{articleSubTitle,jdbcType=VARCHAR},#{articleImage,jdbcType=VARCHAR},#{articleContent,jdbcType=VARCHAR},#{articleAuthor,jdbcType=VARCHAR},#{articleCreateTime,jdbcType=TIMESTAMP},#{categoryId,jdbcType=INTEGER},#{articleUpdateTime,jdbcType=TIMESTAMP},#{articlePreview,jdbcType=VARCHAR},#{articleHashCode,jdbcType=VARCHAR})
 	</insert>
 	
 </mapper>

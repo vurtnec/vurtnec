@@ -1,7 +1,6 @@
 package com.vurtnec.model.bean;
 
 import java.sql.Timestamp;
-
 public class Article {
 
 	private int articleId;
@@ -23,6 +22,8 @@ public class Article {
 	private Timestamp articleUpdateTime;
 	
 	private String articlePreview;
+	
+	private String articleHashCode;
 
 	public int getArticleId() {
 		return articleId;
@@ -102,5 +103,13 @@ public class Article {
 
 	public void setArticlePreview(String articlePreview) {
 		this.articlePreview = articlePreview;
+	}
+
+	public String getArticleHashCode() {
+		return articleHashCode;
+	}
+
+	public void setArticleHashCode(String articleHashCode) {
+		this.articleHashCode = articleHashCode;
 	}
 }

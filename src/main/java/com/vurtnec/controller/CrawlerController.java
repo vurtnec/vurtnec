@@ -16,6 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.rometools.rome.feed.synd.SyndEntry;
+import com.rometools.rome.feed.synd.SyndFeed;
+import com.vurtnec.component.crawler.BlogCrawler;
 import com.vurtnec.component.crawler.CrawlerConfiguration;
 import com.vurtnec.component.crawler.CrawlerUtil;
 import com.vurtnec.component.dbconn.DBConnection;
@@ -23,6 +26,12 @@ import com.vurtnec.component.logger.LoggerNames;
 import com.vurtnec.component.logger.LoggerUtil;
 import com.vurtnec.model.bean.Article;
 import com.vurtnec.model.impl.ArticleMapper;
+
+import edu.uci.ics.crawler4j.crawler.CrawlConfig;
+import edu.uci.ics.crawler4j.crawler.CrawlController;
+import edu.uci.ics.crawler4j.fetcher.PageFetcher;
+import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
+import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
 @Controller
 public class CrawlerController {
@@ -35,30 +44,29 @@ public class CrawlerController {
 	@Resource(name = "crawlerConfiguration")
 	private CrawlerConfiguration crawlerConfiguration;
 	
+	@Resource(name = "crawlerUtil")
+	private CrawlerUtil crawlerUtil;
+	
 	@RequestMapping(value = { "/synchronize" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView login(String url) {
 		logger.info("synchronize controller");
 		ModelAndView mv = new ModelAndView();
-//		Document doc = CrawlerUtil.getHtml(getCrawlerConfiguration().getUrl());
-		
-//		Elements articleUrls = getArticles(doc);
 
 		SqlSession sqlSession = getDbConnection().getSessionFactory().openSession();
 		ArticleMapper articleMapper = sqlSession.getMapper(ArticleMapper.class);
 		try {
-//			for (Element articleUrl : articleUrls) {
-//				Document articleDoc = getArticle(articleUrl);
-//				
-//				Article article = pupolateArticle(articleDoc);
-//				LoggerUtil.getInstantce().debug(logger, article, true);
-//				articleMapper.insertArticle(article);
-//			}
-			Document doc = CrawlerUtil.getHtml(url);
+			
+			if(getCrawlerUtil().checkImported(url, articleMapper)) {
+				mv.setViewName("redirect:/home");
+				return mv;
+			}
+			
+			Document doc = getCrawlerUtil().getHtml(url);
 			
 			if(doc == null) {
 				mv.setViewName("redirect:/error");
 			}
-			Article article = pupolateArticle(doc);
+			Article article = getCrawlerUtil().pupolateArticle(doc, url);
 			
 			LoggerUtil.getInstantce().debug(logger, article, true);
 			
@@ -71,48 +79,59 @@ public class CrawlerController {
 		return mv;
 	}
 	
-	private Article pupolateArticle(Document articleDoc) {
+	@RequestMapping(value = { "/startCrawler" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView start() {
+		logger.info("start controller");
+		ModelAndView mv = new ModelAndView();
+//		try {
+//			CrawlConfig config = new CrawlConfig();
+//			PageFetcher pageFetcher = new PageFetcher(config);
+//			RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
+//			RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
+//			
+//			CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
+//			
+//			controller.addSeed(getCrawlerConfiguration().getUrl());  
+//			controller.start(BlogCrawler.class, 1); 
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
-		String content = getContent(articleDoc);
-		
-		Article article = new Article();
-		article.setArticleTitle(getValue("vurtnecTitle", articleDoc));
-		article.setArticleSubTitle(getValue("vurtnecSubTitle", articleDoc));
-		article.setArticleAuthor(getValue("vurtnecAuthor", articleDoc));
-		article.setArticleContent(content);
-		article.setArticleCreateTime(new Timestamp(new Date().getTime()));
-		
-		article.setArticleImage(getValue("vurtnecImage", articleDoc));
-		article.setCategoryId(Integer.valueOf(getValue("vurtnecCategory", articleDoc)));
-		
-		article.setArticlePreview(CrawlerUtil.delHTMLTag(content));
-		
-		return article;
-	}
-	
-	private String getValue(String key, Document document) {
-		String value = getCrawlerConfiguration().getMap().get(key);
-		Element element = document.getElementById(key);
-		if(element != null) {
-			value = element.html();
+		SqlSession sqlSession = getDbConnection().getSessionFactory().openSession();
+		try {
+			SyndFeed feed = getCrawlerUtil().getRssSource(getCrawlerConfiguration().getUrl());
+			
+			if(feed == null) {
+				mv.addObject("message", "import failed rss feed is empty.");
+				mv.setViewName("redirect:/error");
+				return mv;
+			}
+			
+			ArticleMapper articleMapper = sqlSession.getMapper(ArticleMapper.class);
+			for (SyndEntry empty : feed.getEntries()) {
+				
+				String articleUrl = empty.getLink();
+				
+				if(getCrawlerUtil().checkImported(articleUrl, articleMapper)) {
+					continue;
+				}
+				
+				Document articleDoc = getCrawlerUtil().getHtml(articleUrl);
+				
+				Article article = getCrawlerUtil().pupolateArticle(articleDoc, articleUrl);
+				
+				articleMapper.insertArticle(article);
+			}
+			sqlSession.commit();
+		}finally {
+			sqlSession.close();
 		}
-		return value;
+		mv.addObject("message", "import successed");
+		mv.setViewName("redirect:/admin/home");
+		return mv;
 	}
 	
-//	private Document getArticle(Element articleUrl) {
-//		Node node = articleUrl.childNodes().get(0);
-//		String url = node.attr("href");
-//		return CrawlerUtil.getHtml(url);
-//	}
-//	
-//	private Elements getArticles(Document doc) {
-//		return doc.getElementsByClass("readAll");
-//	}
-	
-	private String getContent(Document doc) {
-		Element e = doc.getElementsByClass("nbw-blog-start").first();
-		return e.nextElementSibling().html();
-	}
 	
 	public DBConnection getDbConnection() {
 		return dbConnection;
@@ -128,5 +147,13 @@ public class CrawlerController {
 
 	public void setCrawlerConfiguration(CrawlerConfiguration crawlerConfiguration) {
 		this.crawlerConfiguration = crawlerConfiguration;
+	}
+
+	public CrawlerUtil getCrawlerUtil() {
+		return crawlerUtil;
+	}
+
+	public void setCrawlerUtil(CrawlerUtil crawlerUtil) {
+		this.crawlerUtil = crawlerUtil;
 	}
 }

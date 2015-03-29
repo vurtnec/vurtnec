@@ -18,4 +18,6 @@ public interface ArticleMapper {
     public int findArticleCount();
     
     public void insertArticle(Article article);
+    
+    public int findArticleByHash(String articleHashCode);
 } 

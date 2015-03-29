@@ -31,6 +31,9 @@
     </bean>
     
     <bean id="crawlerConfiguration" class="com.vurtnec.component.crawler.CrawlerConfiguration">
-    	<property name="url" value="http://vurtnec2015.blog.163.com" />
+    	<property name="url" value="http://vurtnec2015.blog.163.com/rss" />
+    </bean>
+    
+    <bean id="crawlerUtil" class="com.vurtnec.component.crawler.CrawlerUtil">
     </bean>
 </beans>  
