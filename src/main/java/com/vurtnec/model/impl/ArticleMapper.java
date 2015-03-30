@@ -1,6 +1,7 @@
 package com.vurtnec.model.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import com.vurtnec.model.bean.Article;
 
@@ -20,4 +21,8 @@ public interface ArticleMapper {
     public void insertArticle(Article article);
     
     public int findArticleByHash(String articleHashCode);
+    
+    public int findCategoryArticleCount(int categoryId);
+    
+    public List<Article> findCategoryArticlePageOrderByTime(Map<String,Integer> map);
 } 

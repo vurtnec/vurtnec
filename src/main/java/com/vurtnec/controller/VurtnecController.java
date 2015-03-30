@@ -1,6 +1,8 @@
 package com.vurtnec.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -41,7 +43,7 @@ public class VurtnecController {
 		
 		int	pageStr = Integer.valueOf(page);
 		
-		int PageNow = (pageStr -1) * 5;
+		int pageNow = (pageStr -1) * 5;
 		
 		SqlSession sqlSession = getDbConnection().getSessionFactory().openSession();
 		try {
@@ -49,7 +51,7 @@ public class VurtnecController {
 			categorys = categoryMapper.findAllCategory();
 			
 			ArticleMapper articleMapper = sqlSession.getMapper(ArticleMapper.class);
-			articles = articleMapper.findArticlePageOrderByTime(PageNow);
+			articles = articleMapper.findArticlePageOrderByTime(pageNow);
 			
 			totalNum = articleMapper.findArticleCount();
 			
@@ -67,6 +69,54 @@ public class VurtnecController {
 		
 		return mv;
 	}
+	
+	
+
+	@RequestMapping(value = { "/category" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView category(String page, String categoryId) {
+		if(Strings.isNullOrEmpty(page) || Strings.isNullOrEmpty(categoryId)) {
+			page = "1";
+		}
+		LoggerUtil.getInstantce().debug(logger, "home page enter. and page is " + page);
+		List<Category> categorys = null;
+		List<Article> articles = null;
+		int totalNum = 0;
+		
+		int	pageStr = Integer.valueOf(page);
+		
+		int pageNow = (pageStr -1) * 5;
+		
+		SqlSession sqlSession = getDbConnection().getSessionFactory().openSession();
+		try {
+			CategoryMapper categoryMapper = sqlSession.getMapper(CategoryMapper.class);
+			categorys = categoryMapper.findAllCategory();
+			
+			ArticleMapper articleMapper = sqlSession.getMapper(ArticleMapper.class);
+			
+			Map<String, Integer> map = new HashMap<String, Integer>();
+			
+			map.put("categoryId", Integer.valueOf(categoryId));
+			map.put("pageNow", pageNow);
+			
+			articles = articleMapper.findCategoryArticlePageOrderByTime(map);
+			
+			totalNum = articleMapper.findCategoryArticleCount(Integer.valueOf(categoryId));
+			
+		} finally {
+			sqlSession.close();
+		}
+		LoggerUtil.getInstantce().debug(logger, "categorys:" + categorys + ", article:" + articles);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("categorys", categorys);
+		mv.addObject("articles", articles);
+		mv.addObject("currentPage", pageStr);
+		mv.addObject("totalPageNum", totalPageNum(totalNum));
+		mv.setViewName("/front/home");
+		
+		return mv;
+	}
+	
 	
 	@RequestMapping(value = { "/post" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView post(String articleId) {
@@ -102,19 +152,37 @@ public class VurtnecController {
 	}
 	
 	@RequestMapping(value = { "/about" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
-	public String about() {
-		
+	public ModelAndView about() {
 		LoggerUtil.getInstantce().debug(logger, "about page enter.");
-		
-		return "/front/about";
+		ModelAndView mv = new ModelAndView();
+		List<Category> categorys = null;
+		SqlSession sqlSession = getDbConnection().getSessionFactory().openSession();
+		try {
+			CategoryMapper categoryMapper = sqlSession.getMapper(CategoryMapper.class);
+			categorys = categoryMapper.findAllCategory();
+		} finally {
+			sqlSession.close();
+		}
+		mv.addObject("categorys", categorys);
+		mv.setViewName("/front/about");
+		return mv;
 	}
 	
 	@RequestMapping(value = { "/contact" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
-	public String contact() {
-		
+	public ModelAndView contact() {
 		LoggerUtil.getInstantce().debug(logger, "contact page enter.");
-		
-		return "/front/contact";
+		ModelAndView mv = new ModelAndView();
+		List<Category> categorys = null;
+		SqlSession sqlSession = getDbConnection().getSessionFactory().openSession();
+		try {
+			CategoryMapper categoryMapper = sqlSession.getMapper(CategoryMapper.class);
+			categorys = categoryMapper.findAllCategory();
+		} finally {
+			sqlSession.close();
+		}
+		mv.addObject("categorys", categorys);
+		mv.setViewName("/front/contact");
+		return mv;
 	}
 	
 	private int totalPageNum(int totalNum) {

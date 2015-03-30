@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.vurtnec.component.crawler.BlogCrawler;
@@ -116,8 +117,8 @@ public class CrawlerController {
 				if(getCrawlerUtil().checkImported(articleUrl, articleMapper)) {
 					continue;
 				}
-				
-				Document articleDoc = getCrawlerUtil().getHtml(articleUrl);
+				SyndContent content = empty.getDescription();
+				Document articleDoc = getCrawlerUtil().getHtml(content);
 				
 				Article article = getCrawlerUtil().pupolateArticle(articleDoc, articleUrl);
 				

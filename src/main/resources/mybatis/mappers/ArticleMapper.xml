@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC
     "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!--这块等于dao接口的实现 namespace必须和接口的类路径一样 -->
+
 <mapper namespace="com.vurtnec.model.impl.ArticleMapper">
 	
 	<select id="findAllArticleOrderByTime" resultType="Article">
@@ -13,8 +13,16 @@
 		select count(*) from article
 	</select>
 	
+	<select id="findCategoryArticleCount" parameterType="int" resultType="int">
+		select count(*) from article where categoryId=#{categoryId}
+	</select>
+	
 	<select id="findArticlePageOrderByTime" parameterType="int" resultType="Article">
 		select * from article order by articleCreateTime limit #{pageNow},5 
+	</select>
+	
+	<select id="findCategoryArticlePageOrderByTime" parameterType="HashMap" resultType="Article">
+		select * from article where categoryId=#{categoryId} order by articleCreateTime limit #{pageNow},5 
 	</select>
 	
 	<select id="findArticleById" parameterType="int" resultType="Article">

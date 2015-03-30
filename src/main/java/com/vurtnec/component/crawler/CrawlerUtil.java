@@ -16,6 +16,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
+import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
@@ -54,6 +55,10 @@ public class CrawlerUtil {
 		return doc;
 	}
 	
+	public Document getHtml(SyndContent content) {
+		return Jsoup.parse(content.getValue());
+	}
+	
 	
 	public SyndFeed getRssSource(String url) {
 		
@@ -86,7 +91,7 @@ public class CrawlerUtil {
 	
 	public Article pupolateArticle(Document articleDoc, String url) {
 		
-		String content = getContent(articleDoc);
+		String content = articleDoc.toString();
 		
 		Article article = new Article();
 		
