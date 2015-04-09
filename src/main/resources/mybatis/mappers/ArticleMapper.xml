@@ -18,11 +18,11 @@
 	</select>
 	
 	<select id="findArticlePageOrderByTime" parameterType="int" resultType="Article">
-		select * from article order by articleCreateTime limit #{pageNow},5 
+		select * from article order by articleCreateTime desc limit #{pageNow},5 
 	</select>
 	
 	<select id="findCategoryArticlePageOrderByTime" parameterType="HashMap" resultType="Article">
-		select * from article where categoryId=#{categoryId} order by articleCreateTime limit #{pageNow},5 
+		select * from article where categoryId=#{categoryId} order by articleCreateTime desc limit #{pageNow},5 
 	</select>
 	
 	<select id="findArticleById" parameterType="int" resultType="Article">
@@ -34,7 +34,7 @@
 	</select>
 	
 	<select id="findArticleByCategoryIdOrderByTime" parameterType="int" resultType="Article">
-		select * from article where articleId=#{articleId} order by articleCreateTime
+		select * from article where articleId=#{articleId} order by articleCreateTime desc
 	</select>
 	
 	<insert id="insertArticle" parameterType="com.vurtnec.model.bean.Article" useGeneratedKeys="true" keyProperty="articleId">

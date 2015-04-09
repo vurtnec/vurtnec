@@ -2,6 +2,7 @@ package com.vurtnec.controller;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Random;
 
 import javax.annotation.Resource;
 
@@ -101,7 +102,7 @@ public class CrawlerController {
 		
 		SqlSession sqlSession = getDbConnection().getSessionFactory().openSession();
 		try {
-			SyndFeed feed = getCrawlerUtil().getRssSource(getCrawlerConfiguration().getUrl());
+			SyndFeed feed = getCrawlerUtil().getRssSource(getCrawlerConfiguration().getUrl() + "?param=" + Math.random()*100 + 1);
 			
 			if(feed == null) {
 				mv.addObject("message", "import failed rss feed is empty.");

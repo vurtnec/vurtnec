@@ -1,8 +1,13 @@
 package com.vurtnec.component.crawler;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
@@ -79,7 +84,9 @@ public class CrawlerUtil {
 			e.printStackTrace();
 		}finally {
 			try {
-				reader.close();
+				if(reader != null) {
+					reader.close();
+				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -91,7 +98,7 @@ public class CrawlerUtil {
 	
 	public Article pupolateArticle(Document articleDoc, String url) {
 		
-		String content = articleDoc.toString();
+		String content = getContent(articleDoc);
 		
 		Article article = new Article();
 		
@@ -110,18 +117,25 @@ public class CrawlerUtil {
 		return article;
 	}
 	
+	private String getContent(Document articleDoc) {
+		Elements eles = articleDoc.getElementsByTag("img");
+		for (Element element : eles) {
+			element.attr("src", "http://xlucom.aliapp.com/?url=" + element.attr("src"));
+		}
+		return articleDoc.toString();
+	}
+	
 	private String getValue(String key, Document document) {
 		String value = getMap().get(key);
 		Element element = document.getElementById(key);
 		if(element != null) {
-			value = element.html();
+			if("vurtnecImage".equals(key)) {
+				value = "http://xlucom.aliapp.com/?url=" + element.html();
+			} else {
+				value = element.html();
+			}
 		}
 		return value;
-	}
-	
-	private String getContent(Document doc) {
-		Element e = doc.getElementsByClass("nbw-blog-start").first();
-		return e.nextElementSibling().html();
 	}
 	
 	public static String delHTMLTag(String htmlStr){ 
@@ -156,17 +170,34 @@ public class CrawlerUtil {
 	}
 	
 	
-//	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 //		String url = "http://vurtnec2015.blog.163.com/";
-//		
+		
 //		Document doc = getHtml(url);
+		
+//		String html = "<div id='aaa'><img src='https://36.media.tumblr.com/832bebe213f7c21caac89241f4248623/tumblr_inline_nmjqi1UCYY1rffopq_540.jpg' /></div>";
 //		
-////		String html = " <div class=\"nbw-blog-start\">11</div> <div class=\"bct fc05 fc11 nbw-blog ztag\">22222</div>";
-////		
-////		Document doc = Jsoup.parse(html);
-//		System.out.println(doc);
-//		System.out.println("articles:" + getArticles(doc));
-//	}
+//		Document doc = Jsoup.parse(html);
+//		Elements eles = doc.getElementsByTag("img");
+//		for (Element element : eles) {
+//			element.attr("src", "http://xlucom.aliapp.com/?url=" + element.attr("src"));
+//			System.out.println(element);
+//		}
+//		System.out.println("articles:" + doc.getElementsByTag("img"));
+		URL url = new URL("http://img2.ph.126.net/oNqz9OXX02WceiqwIUL8gA==/6630169464699125432.png");
+		URLConnection con = url.openConnection();
+		con.setConnectTimeout(5 * 1000);
+		InputStream is = con.getInputStream();
+		
+		BufferedReader in = new BufferedReader(new InputStreamReader(is));
+		StringBuffer buffer = new StringBuffer();
+		String str;
+		while ((str = in.readLine()) != null) {
+			System.out.println(str);
+			buffer.append(str);
+		}
+		System.out.println(buffer);
+	}
 	
 	
 //	private static Elements getArticles(Document doc) {

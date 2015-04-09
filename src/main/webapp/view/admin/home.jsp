@@ -29,14 +29,14 @@
 		</div>
 	</div>
 	<br />
-	<%-- <div class="container">
+	<div class="container">
 		<div class="row">
 			<form action="${ctx}/synchronize" id="synchronizeForm" method="get">
 				<input type="text" name="url">
 				<button id="synchronizeBtm">synchronize</button>
 			</form>
 		</div>
-	</div> --%>
+	</div>
 
 	<%@ include file="/view/front/common/footer.jspf"%>
 	<script type="text/javascript">
