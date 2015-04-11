@@ -8,7 +8,15 @@
 	#articleContent img{
 		width:100%;
 		max-width: 730px;
-	}   
+	}
+	#articleContent {
+		font-family: 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'tohoma,sans-serif';
+		box-shadow: 0 1px 7px #bcbcbc;
+		border-radius: 10px;
+		padding: 25px;
+		font-size:16px;
+		line-height: 150%;
+	}
     </style>
 </head>
 
@@ -45,7 +53,7 @@
     <article>
         <div class="container">
             <div class="row">
-                <div id="articleContent" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="box-shadow: 0 1px 7px #bcbcbc;border-radius: 10px;padding: 25px;font-size:16px;">
+                <div id="articleContent" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     ${article.articleContent }
                 </div>
             </div>

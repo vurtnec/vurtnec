@@ -1,7 +1,6 @@
 package com.vurtnec.component.crawler;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,7 +17,6 @@ import java.util.regex.Pattern;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
 import com.rometools.rome.feed.synd.SyndContent;
@@ -88,7 +86,6 @@ public class CrawlerUtil {
 					reader.close();
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -120,7 +117,7 @@ public class CrawlerUtil {
 	private String getContent(Document articleDoc) {
 		Elements eles = articleDoc.getElementsByTag("img");
 		for (Element element : eles) {
-			element.attr("src", "http://xlucom.aliapp.com/?url=" + element.attr("src"));
+			element.attr("src", "http://121.42.222.193/parseImg?url=" + element.attr("src"));
 		}
 		return articleDoc.toString();
 	}
@@ -130,7 +127,7 @@ public class CrawlerUtil {
 		Element element = document.getElementById(key);
 		if(element != null) {
 			if("vurtnecImage".equals(key)) {
-				value = "http://xlucom.aliapp.com/?url=" + element.html();
+				value = "http://121.42.222.193/parseImg?url=" + element.html();
 			} else {
 				value = element.html();
 			}

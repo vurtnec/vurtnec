@@ -5,6 +5,23 @@
 <title>Home - Vurtnec Blog</title>
 <%@ include file="/view/front/common/header.jspf"%>
 <link rel="stylesheet" type="text/css" href="${ctx}/css/login.css" />
+<style type="text/css">
+	#articlePreview {
+		font-size: 16px;
+		font-family: 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'tohoma,sans-serif';
+		line-height: 150%;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	#articleTitle {
+		font-family: 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'tohoma,sans-serif';
+		font-size: 24px;
+		font-weight: 500;
+	}
+	#articleSubTitle {
+		font-size: 20px;
+	}
+</style>
 </head>
 
 <body>
@@ -16,8 +33,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-					<div class="site-heading">
-						<h1>Welcome</h1>
+					<div class="site-heading" style="padding-top: 200px;padding-bottom: 50px;">
+						<img src="img/profile.jpg" style="width: 90px;height: 90px;border: solid;border-radius: 10px;">
 						<hr class="small">
 						<span class="subheading">Stay hungry, Stay foolish.</span>
 					</div>
@@ -29,19 +46,21 @@
 	<!-- Main Content -->
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="box-shadow: 0 1px 7px #bcbcbc;border-radius: 10px;">
+				<h2 style="color:black;padding-top: 20px;margin-top: 0px;">Latest Articles</h2>
+				<hr>
 				<c:forEach items="${articles }" var="article">
 					<div class="post-preview">
 						<a href="post?articleId=${article.articleId }"> <c:if
 								test="${not empty article.articleImage}">
 								<div
-									style="background-image: url('${article.articleImage}');height:238px;background-size:cover;background-position:center;margin-bottom:-20px;">&nbsp;</div>
+									style="background-image: url('${article.articleImage}');height:238px;background-size:cover;background-position:center;margin-bottom:-20px;margin-left:-15px;margin-right:-15px;">&nbsp;</div>
 							</c:if>
-							<h2 class="post-title">${article.articleTitle}</h2>
-							<h3 class="post-subtitle">${article.articleSubTitle}</h3>
+							<h2 class="post-title" id="articleTitle">${article.articleTitle}</h2>
+							<h3 class="post-subtitle" id="articleSubTitle">${article.articleSubTitle}</h3>
 						</a>
 						<c:if test="${not empty article.articlePreview }">
-							<p style="font-size: 16px;">${article.articlePreview }...</p>
+							<p id="articlePreview">${article.articlePreview }...</p>
 						</c:if>
 						<c:choose>
 							<c:when test="${empty article.articleAuthor}">
