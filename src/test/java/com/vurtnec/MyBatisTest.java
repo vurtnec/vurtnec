@@ -1,15 +1,12 @@
 package com.vurtnec;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Date;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.vurtnec.model.bean.Article;
 import com.vurtnec.model.impl.ArticleMapper;
 import com.vurtnec.model.impl.CategoryMapper;
 import com.vurtnec.model.impl.UserMapper;

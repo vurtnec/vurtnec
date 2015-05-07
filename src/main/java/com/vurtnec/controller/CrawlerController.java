@@ -1,15 +1,10 @@
 package com.vurtnec.controller;
 
-import java.sql.Timestamp;
-import java.util.Date;
 
 import javax.annotation.Resource;
 
 import org.apache.ibatis.session.SqlSession;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
-import com.vurtnec.component.crawler.BlogCrawler;
 import com.vurtnec.component.crawler.CrawlerConfiguration;
 import com.vurtnec.component.crawler.CrawlerUtil;
 import com.vurtnec.component.dbconn.DBConnection;
@@ -28,11 +22,6 @@ import com.vurtnec.component.logger.LoggerUtil;
 import com.vurtnec.model.bean.Article;
 import com.vurtnec.model.impl.ArticleMapper;
 
-import edu.uci.ics.crawler4j.crawler.CrawlConfig;
-import edu.uci.ics.crawler4j.crawler.CrawlController;
-import edu.uci.ics.crawler4j.fetcher.PageFetcher;
-import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
-import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 
 @Controller
 public class CrawlerController {
@@ -101,7 +90,7 @@ public class CrawlerController {
 		
 		SqlSession sqlSession = getDbConnection().getSessionFactory().openSession();
 		try {
-			SyndFeed feed = getCrawlerUtil().getRssSource(getCrawlerConfiguration().getUrl());
+			SyndFeed feed = getCrawlerUtil().getRssSource(getCrawlerConfiguration().getUrl() + "?param=" + Math.random()*100 + 1);
 			
 			if(feed == null) {
 				mv.addObject("message", "import failed rss feed is empty.");

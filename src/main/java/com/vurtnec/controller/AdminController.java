@@ -99,6 +99,19 @@ public class AdminController {
 	}
 	
 	
+	@RequestMapping(value = { "/parseImg" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView parseImg(String url) {
+		logger.info("parse image controller");
+		ModelAndView mv = new ModelAndView();
+		if(Strings.isNullOrEmpty(url)) {
+			mv.setViewName("redirect:/error");
+			return mv;
+		}
+		mv.setViewName("/admin/parseImg");
+		return mv;
+	}
+	
+	
 	
 	
 	public DBConnection getDbConnection() {
