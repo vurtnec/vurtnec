@@ -25,9 +25,9 @@
     <!-- Page Header -->
     <!-- Set your background image for this header on the line below. -->
     <c:set var="bgImg" value="img/home-bg.png" />
-    <c:if test="${not empty article.articleImage}">
-    	<c:set var="bgImg" value="${article.articleImage }" />
-    </c:if>
+<%--     <c:if test="${not empty article.articleImage}"> --%>
+<%--     	<c:set var="bgImg" value="${article.articleImage }" /> --%>
+<%--     </c:if> --%>
     <header class="intro-header" style="background-image: url('${bgImg}')">
         <div class="container">
             <div class="row">
