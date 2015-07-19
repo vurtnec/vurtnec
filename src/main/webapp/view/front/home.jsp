@@ -21,6 +21,9 @@
 	#articleSubTitle {
 		font-size: 20px;
 	}
+	.pager {
+		margin-bottom: 20px;
+	}
 </style>
 </head>
 
@@ -83,7 +86,7 @@
 				</c:forEach>
 
 				<!-- Pager -->
-				<c:if test="${totalPageNum > 5 }">
+				<c:if test="${totalPageNum > 1 }">
 					<ul class="pager">
 						<c:if test="${currentPage != 1 }">
 							<li class="previous"><a href="home?page=${currentPage - 1}">&larr;
