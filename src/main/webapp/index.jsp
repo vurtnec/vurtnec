@@ -7,6 +7,8 @@
 <jsp:forward page="search.jsp" />
 <%		//response.sendRedirect("search.jsp");
 	} else if ("blog.vurtnec.com".equals(serverName) || "localhost".equals(serverName)) {
-		response.sendRedirect("home");
+%>
+<jsp:forward page="home" />
+<%		//response.sendRedirect("home");
 	}
 %>
