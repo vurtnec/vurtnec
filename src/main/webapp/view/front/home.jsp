@@ -22,7 +22,7 @@
 		font-size: 20px;
 	}
 	.pager {
-		margin-bottom: 20px;
+		padding-bottom: 20px;
 	}
 </style>
 </head>
